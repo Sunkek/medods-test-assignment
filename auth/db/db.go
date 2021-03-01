@@ -133,7 +133,6 @@ func DeleteToken(coll *mongo.Collection, userID uuid.UUID, tokenID string) error
 		if err = cursor.Decode(&tokenDoc); err != nil {
 			return err
 		}
-		fmt.Println(tokenDoc)
 		err = bcrypt.CompareHashAndPassword(tokenDoc.TokenID, []byte(tokenID))
 		if err == nil {
 			_, err = coll.DeleteOne(ctx, tokenDoc)
