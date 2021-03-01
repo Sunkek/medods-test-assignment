@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "mongodata:/data/db"
+    networks:
+      - network1
+
+  auth:
+    build:
+      context: auth/
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+    ports:
+      - 8080:8080
+    networks:
+      - network1
+    env_file: 
+      - .env
+
+volumes:
+   mongodata:
+
+networks:
+   network1:
